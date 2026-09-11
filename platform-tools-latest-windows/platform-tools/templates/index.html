@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photobooth - UI Theme</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e0e3ff 100%);
+      color: #333;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
+    }
+    .start-button {
+      background: linear-gradient(135deg, #8B5CF6, #6366F1);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .start-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+    .start-button:disabled {
+      background: #9CA3AF;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .countdown-circle {
+      width: 200px; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      font-size: 100px; font-weight: 700;
+      color: #6366F1;
+      background: rgba(255, 255, 255, 0.7);
+      animation: pulse-light 2s infinite;
+    }
+    .status-badge {
+      display: inline-flex; align-items: center;
+      padding: 4px 12px; border-radius: 9999px;
+      font-size: 14px; font-weight: 600;
+    }
+    .badge-purple { background-color: #EDE9FE; color: #7C3AED; }
+    .badge-red { background-color: #FEE2E2; color: #EF4444; }
+    .badge-green { background-color: #D1FAE5; color: #059669; }
+    .icon-circle {
+      width: 120px; height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8B5CF6, #6366F1);
+      color: white;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .progress-bar-bg {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 9999px;
+      height: 16px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .progress-bar-inner {
+      height: 100%; border-radius: 9999px;
+      background: linear-gradient(135deg, #8B5CF6, #6366F1);
+      transition: width 0.5s ease;
+      animation: pulse-heavy 2s infinite;
+    }
+    @keyframes pulse-light {
+      0%, 100% { box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1); }
+      50% { box-shadow: 0 8px 40px rgba(139, 92, 246, 0.2); }
+    }
+    @keyframes pulse-heavy {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spinner { animation: spin 1s linear infinite; }
+    /* Fixed portrait preview (360x640) but responsive down to viewport */
+    .preview-fixed {
+      width: min(270px, 90vw);
+      aspect-ratio: 9 / 16; 
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .preview-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="relative w-full py-8 px-12">
+    <h1 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-indigo-700">
+      Photobooth
+    </h1>
+    <div class="absolute top-2 left-7 w-20 h-20 object-contain">
+    <img src="static/images/logo2.png" alt="Logo" class="h-10 w-auto object-contain" />
+    </div>
+
+  <div class="absolute top-6 right-8">
+    <img 
+      src="static/images/logo3.png" 
+      alt="Bottom Logo" 
+      class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity duration-300"
+    />
+  </div>
+
+    </header>
+    </header>
+
+
+  <main class="flex-1 flex flex-col items-center justify-center text-center py-12 px-4">
+
+  <!-- Frame 1: Welcome -->
+  <section id="frame-welcome" class="w-full max-w-3xl flex flex-col items-center">
+    
+    <!-- Headings -->
+    <h2 class="mt-2 text-3xl font-bold text-gray-800">
+      Instructions to Follow
+    </h2>
+
+    <!-- Instructions Cards Container -->
+    <div class="mt-4 space-y-6 w-full">
+
+      <!-- Card 1 -->
+      <div class="bg-gradient-to-r from-blue-50 to-white p-6 rounded-2xl shadow-lg border border-gray-100 flex items-center space-x-5">
+        <div class="flex-shrink-0 w-14 h-14 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div class="text-left">
+          <p class="text-lg font-bold text-gray-800">Stand on the Marked Area</p>
+          <p class="text-gray-600 mt-1">Ensure you are within the camera's frame for accurate capture.</p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex items-center space-x-5" style="box-shadow: 0 10px 25px -5px rgba(99,102,241,0.1), 0 4px 6px -2px rgba(99,102,241,0.05);">
+        <div class="flex-shrink-0 w-14 h-14 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <div class="text-left">
+          <p class="text-lg font-bold text-gray-800">Pose When Arm Moves</p>
+          <p class="text-gray-600 mt-1">Get ready and pose naturally when the robotic arm starts moving.</p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex items-center space-x-5" style="box-shadow: 0 10px 25px -5px rgba(239,68,68,0.15), 0 4px 6px -2px rgba(239,68,68,0.05);">
+        <div class="flex-shrink-0 w-14 h-14 rounded-full bg-red-500 text-white flex items-center justify-center shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M5.062 19h13.876c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div class="text-left">
+          <p class="text-lg font-bold text-gray-800">Maintain Safe Distance</p>
+          <p class="text-gray-600 mt-1">Do not approach or touch the robotic arm during operation.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Start Button -->
+    <button id="startButton" class="start-button text-white font-bold py-4 px-12 rounded-full text-2xl mt-8">
+      Start
+    </button>
+    <p id="welcomeError" class="text-red-500 mt-4"></p>
+
+  </section>
+
+      <!-- Frame 2: Countdown -->
+      <section id="frame-countdown" class="hidden w-full max-w-3xl flex flex-col items-center">
+        <span class="status-badge badge-purple mb-4">Get Ready</span>
+        <p class="text-2xl text-gray-600 mb-8">The recording will start in...</p>
+        <div id="countdownCircle" class="countdown-circle">3</div>
+      </section>
+
+      <!-- Frame 3: Recording -->
+      <section id="frame-recording" class="hidden w-full max-w-3xl flex flex-col items-center">
+        <span class="status-badge badge-red mb-6 animate-pulse">
+          <svg class="w-3 h-3 mr-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+          Recording
+        </span>
+        <p class="text-4xl font-semibold text-gray-800 mb-8">START...CAMERA...ACTION</p>
+        <img 
+          src="static/videos/gif1.gif" 
+          alt="Recording Animation" 
+          class="w-48 h-48 object-contain mb-8"
+        />
+        <div class="text-center">
+    <p class="text-base text-gray-600 mb-1">Video recording for</p>
+    <p id="recordingCountdownText" class="text-3xl font-bold text-indigo-700">
+      8 <span class="text-lg">seconds</span>
+    </p>
+    
+  </div>
+
+      </section>
+
+      <!-- Frame 4: Processing -->
+      <section id="frame-processing" class="hidden w-full max-w-3xl flex flex-col items-center">
+        <img 
+          src="static/videos/gif2.gif" 
+          alt="Recording Animation" 
+          class="w-48 h-48 object-contain mb-8"
+        />
+        <p class="text-2xl font-semibold text-gray-800 mb-2">We're polishing your masterpiece...</p>
+        <p class="text-lg text-gray-500 mb-8">Optimizing angles, lights, and vibes - hang on!</p>
+        <div class="w-full max-w-md progress-bar-bg">
+          <div id="progressBar" class="progress-bar-inner" style="width: 10%"></div>
+        </div>
+        <p id="processingError" class="text-red-500 mt-4"></p>
+      </section>
+
+      <!-- Frame 5: Preview -->
+      <section id="frame-preview" class="hidden w-full max-w-3xl flex flex-col items-center">
+        <span class="status-badge badge-purple mb-4">Ready to view</span>
+        <div class="preview-fixed glass-card overflow-hidden mb-4 p-2">
+          <video id="videoPlayer" class="preview-video rounded-lg" controls muted>Your browser does not support the video tag.</video>
+        </div>
+        <div class="glass-card badge-green py-3 px-5">
+          <p class="font-semibold">Video has been sent to your WhatsApp</p>
+        </div>
+      </section>
+
+      <!-- Frame 6: Thank You -->
+      <section id="frame-thankyou" class="hidden w-full max-w-3xl flex flex-col items-center">
+        <img 
+          src="static/videos/gif3.gif" 
+          alt="Recording Animation" 
+          class="w-48 h-48 object-contain mb-4"
+        />
+        <p class="text-5xl font-bold main-title mb-2">Thank You!</p>
+        <p class="text-2xl text-gray-600">Share your experience with us...</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+  const frames = {
+    welcome: document.getElementById('frame-welcome'),
+    countdown: document.getElementById('frame-countdown'),
+    recording: document.getElementById('frame-recording'),
+    processing: document.getElementById('frame-processing'),
+    preview: document.getElementById('frame-preview'),
+    thankyou: document.getElementById('frame-thankyou'),
+  };
+  const startButton = document.getElementById('startButton');
+  const countdownCircle = document.getElementById('countdownCircle');
+  const recordingCountdownText = document.getElementById('recordingCountdownText');
+  const videoPlayer = document.getElementById('videoPlayer');
+  const progressBar = document.getElementById('progressBar');
+  const welcomeError = document.getElementById('welcomeError');
+  const processingError = document.getElementById('processingError');
+
+  let autoStopDelay = 8;
+  let countdownInterval, recordingInterval, pollInterval, progressInterval;
+  let currentVideoUrl = null;
+
+  function showFrame(id) {
+    Object.values(frames).forEach(f => f.classList.add('hidden'));
+    frames[id]?.classList.remove('hidden');
+    frames[id]?.classList.add('flex');
+  }
+
+  startButton.addEventListener('click', startSequence);
+  videoPlayer.addEventListener('ended', showThankYou);
+
+  function startSequence() {
+    startButton.disabled = true;
+    welcomeError.textContent = '';
+    showFrame('countdown');
+    let count = 3;
+    countdownCircle.textContent = count;
+    countdownInterval = setInterval(() => {
+      count--;
+      if (count > 0) countdownCircle.textContent = count;
+      else {
+        clearInterval(countdownInterval);
+        startRecording();
+      }
+    }, 1000);
+  }
+
+  async function startRecording() {
+    try {
+      const res = await fetch('/start');
+      if (!res.ok) throw new Error('Failed to start recording');
+      const data = await res.json();
+      autoStopDelay = data.auto_stop_after_sec || 8;
+      showFrame('recording');
+      startRecordingCountdown(autoStopDelay);
+    } catch (err) {
+      showError('welcome', err.message);
+    }
+  }
+
+  function startRecordingCountdown(duration) {
+    let remaining = duration;
+    recordingCountdownText.textContent = `${remaining} seconds`;
+    recordingInterval = setInterval(() => {
+      remaining--;
+      recordingCountdownText.textContent = `${remaining} seconds`;
+      if (remaining <= 0) {
+        clearInterval(recordingInterval);
+        processVideo();
+      }
+    }, 1000);
+  }
+
+  async function processVideo() {
+    showFrame('processing');
+    let progress = 10;
+    progressInterval = setInterval(() => {
+      if (progress < 90) {
+        progress += Math.random() * 5;
+        progressBar.style.width = `${progress}%`;
+      }
+    }, 600);
+
+    try {
+      pollInterval = setInterval(async () => {
+        const res = await fetch(`/latest?t=${Date.now()}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        
+        if (res.ok) {
+          const blob = await res.blob();
+          if (blob.size > 0) {
+            clearInterval(pollInterval);
+            clearInterval(progressInterval);
+            progressBar.style.width = `100%`;
+            showPreview(blob);
+          }
+        }
+      }, 3000);
+    } catch (err) {
+      showError('processing', err.message);
+    }
+  }
+
+  function showPreview(blob) {
+    showFrame('preview');
+    
+    if (currentVideoUrl) {
+      URL.revokeObjectURL(currentVideoUrl);
+    }
+    
+    currentVideoUrl = URL.createObjectURL(blob);
+    videoPlayer.src = currentVideoUrl;
+    videoPlayer.load();
+    videoPlayer.play();
+  }
+
+  function showThankYou() {
+    showFrame('thankyou');
+    
+    if (currentVideoUrl) {
+      URL.revokeObjectURL(currentVideoUrl);
+      currentVideoUrl = null;
+    }
+    
+    setTimeout(() => {
+      window.location.href = 'http://127.0.0.1:5000/';
+    }, 3000);
+  }
+
+  function showError(frame, msg) {
+    if (frame === 'welcome') welcomeError.textContent = msg;
+    else if (frame === 'processing') processingError.textContent = msg;
+    showFrame('welcome');
+    startButton.disabled = false;
+  }
+</script>
+</body>
+</html>
