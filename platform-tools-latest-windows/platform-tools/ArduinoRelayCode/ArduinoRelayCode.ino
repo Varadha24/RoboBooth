@@ -1,11 +1,42 @@
+// Arduino UNO
+// Laptop/Backend -> USB Serial -> Arduino -> Relay -> Doosan Controller
+
+const int RELAY_PIN = 7;
+
+// Commands expected from backend:
+// HIGH  -> Relay ON
+// LOW   -> Relay OFF
+
 void setup() {
-  pinMode(PC13, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+
+  // Relay OFF initially
+  digitalWrite(RELAY_PIN, LOW);
+
+  Serial.begin(9600);
+
+  Serial.println("Arduino Ready");
 }
 
 void loop() {
-  digitalWrite(PC13, LOW);   // LED ON
-  delay(500);
 
-  digitalWrite(PC13, HIGH);  // LED OFF
-  delay(500);
+  if (Serial.available() > 0) {
+
+    String command = Serial.readStringUntil('\n');
+    command.trim();
+
+    if (command == "HIGH") {
+
+      digitalWrite(RELAY_PIN, HIGH);
+
+      Serial.println("RELAY_HIGH");
+    }
+
+    else if (command == "LOW") {
+
+      digitalWrite(RELAY_PIN, LOW);
+
+      Serial.println("RELAY_LOW");
+    }
+  }
 }
